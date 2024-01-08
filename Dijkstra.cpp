@@ -1,19 +1,19 @@
-#include <iostream>   //ÓÃÓÚÊäÈëºÍÊä³öÁ÷²Ù×÷£¬°üÀ¨ std::cin¡¢std::cout µÈ¡£
+#include <iostream>   //ç”¨äºè¾“å…¥å’Œè¾“å‡ºæµæ“ä½œï¼ŒåŒ…æ‹¬ std::cinã€std::cout ç­‰ã€‚
 #include <iomanip>
-#include <climits>   //°üº¬ÁËÒ»Ğ©ÕûÊıÀàĞÍµÄ³£Á¿£¬Èç INT_MAX ºÍ INT_MIN¡£
-#include <algorithm> //Ìá¹©ÁËÒ»Ğ©³£¼ûµÄËã·¨º¯Êı£¬ÈçÅÅĞò¡¢²éÕÒµÈ¡£ÀıÈç£¬std::sort ¿ÉÓÃÓÚ¶ÔÈİÆ÷½øĞĞÅÅĞò¡£
-#include <vector>    //ÊµÏÖÁË¶¯Ì¬Êı×é£¨ÏòÁ¿£©µÄÈİÆ÷£¬Ìá¹©ÁË¿ØÖÆ´óĞ¡¡¢·ÃÎÊÔªËØºÍµü´úµÈ¹¦ÄÜ¡£
-#include <tuple>     //Ìá¹©ÁËÔª×éµÄÊµÏÖ£¬ÓÃÓÚ´æ´¢ºÍ²Ù×÷¶à¸ö²»Í¬ÀàĞÍµÄÖµ¡£
+#include <climits>   //åŒ…å«äº†ä¸€äº›æ•´æ•°ç±»å‹çš„å¸¸é‡ï¼Œå¦‚ INT_MAX å’Œ INT_MINã€‚
+#include <algorithm> //æä¾›äº†ä¸€äº›å¸¸è§çš„ç®—æ³•å‡½æ•°ï¼Œå¦‚æ’åºã€æŸ¥æ‰¾ç­‰ã€‚ä¾‹å¦‚ï¼Œstd::sort å¯ç”¨äºå¯¹å®¹å™¨è¿›è¡Œæ’åºã€‚
+#include <vector>    //å®ç°äº†åŠ¨æ€æ•°ç»„ï¼ˆå‘é‡ï¼‰çš„å®¹å™¨ï¼Œæä¾›äº†æ§åˆ¶å¤§å°ã€è®¿é—®å…ƒç´ å’Œè¿­ä»£ç­‰åŠŸèƒ½ã€‚
+#include <tuple>     //æä¾›äº†å…ƒç»„çš„å®ç°ï¼Œç”¨äºå­˜å‚¨å’Œæ“ä½œå¤šä¸ªä¸åŒç±»å‹çš„å€¼ã€‚
 #include <set>
-#include <queue>    //ÊµÏÖÁË¶ÓÁĞµÄÈİÆ÷£¬×ñÑ­ÏÈ½øÏÈ³ö£¨FIFO£©µÄÔ­Ôò¡£
-#include <time.h>   //C ÓïÑÔÖĞµÄ±ê×¼Í·ÎÄ¼ş£¬Ìá¹©ÁË´¦ÀíÈÕÆÚºÍÊ±¼äµÄº¯Êı¡£
+#include <queue>    //å®ç°äº†é˜Ÿåˆ—çš„å®¹å™¨ï¼Œéµå¾ªå…ˆè¿›å…ˆå‡ºï¼ˆFIFOï¼‰çš„åŸåˆ™ã€‚
+#include <time.h>   //C è¯­è¨€ä¸­çš„æ ‡å‡†å¤´æ–‡ä»¶ï¼Œæä¾›äº†å¤„ç†æ—¥æœŸå’Œæ—¶é—´çš„å‡½æ•°ã€‚
 #include <random>
 
-using namespace std;   //ËüÊÇÒ»¸öÃüÃû¿Õ¼äµÄÉùÃ÷£¬±íÊ¾ÔÚµ±Ç°´úÂëÖĞÊ¹ÓÃ std ÃüÃû¿Õ¼äÖĞµÄËùÓĞ±êÊ¶·û£¬¶øÎŞĞèÏÔÊ½µØ¼ÓÉÏ std:: Ç°×º¡£
+using namespace std;   //å®ƒæ˜¯ä¸€ä¸ªå‘½åç©ºé—´çš„å£°æ˜ï¼Œè¡¨ç¤ºåœ¨å½“å‰ä»£ç ä¸­ä½¿ç”¨ std å‘½åç©ºé—´ä¸­çš„æ‰€æœ‰æ ‡è¯†ç¬¦ï¼Œè€Œæ— éœ€æ˜¾å¼åœ°åŠ ä¸Š std:: å‰ç¼€ã€‚
 
-const int infty = INT_MAX;   //¶¨ÒåÁËÒ»¸öÃûÎª infty µÄ³£Á¿£¬ÆäÖµ±»ÉèÖÃÎª INT_MAX¡£INT_MAX ÊÇ <climits> Í·ÎÄ¼şÖĞ¶¨ÒåµÄÕûÊıÀàĞÍµÄ×î´óÖµ¡£Í¨¹ı½« infty ÉèÖÃÎª INT_MAX£¬Êµ¼ÊÉÏ½«ÆäÓÃ×÷±íÊ¾ÎŞÇî´óµÄÖµ¡£
+const int infty = INT_MAX;   //å®šä¹‰äº†ä¸€ä¸ªåä¸º infty çš„å¸¸é‡ï¼Œå…¶å€¼è¢«è®¾ç½®ä¸º INT_MAXã€‚INT_MAX æ˜¯ <climits> å¤´æ–‡ä»¶ä¸­å®šä¹‰çš„æ•´æ•°ç±»å‹çš„æœ€å¤§å€¼ã€‚é€šè¿‡å°† infty è®¾ç½®ä¸º INT_MAXï¼Œå®é™…ä¸Šå°†å…¶ç”¨ä½œè¡¨ç¤ºæ— ç©·å¤§çš„å€¼ã€‚
 
-//Code for printing a vector    //½« vector ÈİÆ÷µÄÄÚÈİÒÔÀàËÆÊı×éµÄĞÎÊ½Êä³öµ½±ê×¼Êä³öÁ÷¡£
+//Code for printing a vector    //å°† vector å®¹å™¨çš„å†…å®¹ä»¥ç±»ä¼¼æ•°ç»„çš„å½¢å¼è¾“å‡ºåˆ°æ ‡å‡†è¾“å‡ºæµã€‚
 template<typename T>
 ostream& operator<<(ostream& s, vector<T> t) {
 	s << "[";
@@ -37,14 +37,14 @@ public:
 	Graph(int n) {
 		this->n = n;
 		this->m = 0;
-		this->adj.resize(n, vector<Neighbour>());   //ÔÚ¹¹Ôìº¯ÊıÖĞ£¬½« n ÉèÖÃÎª´«ÈëµÄ²ÎÊıÖµ£¬m ÉèÖÃÎª 0£¬adj ³õÊ¼»¯Îª´óĞ¡Îª n µÄ¶şÎ¬ÏòÁ¿¡£
+		this->adj.resize(n, vector<Neighbour>());   //åœ¨æ„é€ å‡½æ•°ä¸­ï¼Œå°† n è®¾ç½®ä¸ºä¼ å…¥çš„å‚æ•°å€¼ï¼Œm è®¾ç½®ä¸º 0ï¼Œadj åˆå§‹åŒ–ä¸ºå¤§å°ä¸º n çš„äºŒç»´å‘é‡ã€‚
 	}
-	~Graph() {   //Îö¹¹º¯Êı£¬ÓÃÓÚÊÍ·ÅÍ¼µÄ×ÊÔ´¡£ÔÚÎö¹¹º¯ÊıÖĞ£¬½« n ºÍ m ÉèÖÃÎª 0£¬Ê¹ÓÃ clear() ·½·¨Çå¿Õ adj ÏòÁ¿¡£
+	~Graph() {   //ææ„å‡½æ•°ï¼Œç”¨äºé‡Šæ”¾å›¾çš„èµ„æºã€‚åœ¨ææ„å‡½æ•°ä¸­ï¼Œå°† n å’Œ m è®¾ç½®ä¸º 0ï¼Œä½¿ç”¨ clear() æ–¹æ³•æ¸…ç©º adj å‘é‡ã€‚
 		this->n = 0;
 		this->m = 0;
 		this->adj.clear();
 	}
-	void addArc(int u, int v, int w) {   //Ìí¼ÓÒ»Ìõ´Ó¶¥µã u µ½¶¥µã v µÄ»¡£¬²¢Ö¸¶¨È¨ÖØ w¡£ÔÚÁÚ½Ó±íÖĞ£¬½« v ºÍ w ·â×°Îª Neighbour ¶ÔÏó£¬²¢Ìí¼Óµ½ adj[u] µÄÄ©Î²¡£Í¬Ê±£¬½« m ÖµÔö¼Ó 1¡£
+	void addArc(int u, int v, int w) {   //æ·»åŠ ä¸€æ¡ä»é¡¶ç‚¹ u åˆ°é¡¶ç‚¹ v çš„å¼§ï¼Œå¹¶æŒ‡å®šæƒé‡ wã€‚åœ¨é‚»æ¥è¡¨ä¸­ï¼Œå°† v å’Œ w å°è£…ä¸º Neighbour å¯¹è±¡ï¼Œå¹¶æ·»åŠ åˆ° adj[u] çš„æœ«å°¾ã€‚åŒæ—¶ï¼Œå°† m å€¼å¢åŠ  1ã€‚
 		this->adj[u].push_back(Neighbour{ v, w });
 		this->m++;
 	}
@@ -55,19 +55,19 @@ struct QueueItem {
 	int label;
 	int vertex;
 };
-struct minQueueItem {   //ËüÓÃÓÚ×Ô¶¨ÒåÓÅÏÈ¶ÓÁĞÖĞÔªËØµÄ±È½Ï¹æÔò£¬ÊµÏÖÁË×îĞ¡ÓÅÏÈ¶ÓÁĞ¡£  ÉıĞò
+struct minQueueItem {   //å®ƒç”¨äºè‡ªå®šä¹‰ä¼˜å…ˆé˜Ÿåˆ—ä¸­å…ƒç´ çš„æ¯”è¾ƒè§„åˆ™ï¼Œå®ç°äº†æœ€å°ä¼˜å…ˆé˜Ÿåˆ—ã€‚  å‡åº
 	bool operator() (const QueueItem& lhs, const QueueItem& rhs) const {
 		return tie(lhs.label, lhs.vertex) < tie(rhs.label, rhs.vertex);
 	}
 };
-struct maxQueueItem {    //  ×îĞ¡¶ÑµÄ¹æÔò
+struct maxQueueItem {    //  æœ€å°å †çš„è§„åˆ™
 	bool operator() (const QueueItem& lhs, const QueueItem& rhs) const {
 		return tie(lhs.label, lhs.vertex) > tie(rhs.label, rhs.vertex);
 	}
 };
 
 //Struct used for each Fibonacci heap node
-struct FibonacciNode {    //ÓÃÓÚ±íÊ¾ì³²¨ÄÇÆõ¶ÑµÄ½Úµã
+struct FibonacciNode {    //ç”¨äºè¡¨ç¤ºæ–æ³¢é‚£å¥‘å †çš„èŠ‚ç‚¹
 	int degree;
 	FibonacciNode* parent;
 	FibonacciNode* child;
@@ -110,8 +110,8 @@ public:
 	}
 	void insert(int u, int key) {
 		//Insert the vertex u with the specified key (value for L(u)) into the Fibonacci heap. O(1) operation
-		this->nodePtrs[u] = new FibonacciNode;  // ´´½¨Ò»¸öĞÂµÄ FibonacciNode ¶ÔÏó£¬²¢½«ÆäÖ¸Õë´æ´¢ÔÚ nodePtrs Êı×éÖĞ£¬Ê¹ÓÃ¶¥µã u ×÷ÎªË÷Òı
-		this->nodePtrs[u]->nodeIndex = u;   // ÉèÖÃĞÂ½ÚµãµÄË÷ÒıºÍ¹Ø¼üÖµ
+		this->nodePtrs[u] = new FibonacciNode;  // åˆ›å»ºä¸€ä¸ªæ–°çš„ FibonacciNode å¯¹è±¡ï¼Œå¹¶å°†å…¶æŒ‡é’ˆå­˜å‚¨åœ¨ nodePtrs æ•°ç»„ä¸­ï¼Œä½¿ç”¨é¡¶ç‚¹ u ä½œä¸ºç´¢å¼•
+		this->nodePtrs[u]->nodeIndex = u;   // è®¾ç½®æ–°èŠ‚ç‚¹çš„ç´¢å¼•å’Œå…³é”®å€¼
 		FibonacciNode* node = this->nodePtrs[u];
 		node->key = key;
 		node->degree = 0;
@@ -120,41 +120,41 @@ public:
 		node->left = node;
 		node->right = node;
 		node->mark = false;
-		FibonacciNode* minN = this->minNode;   // »ñÈ¡µ±Ç°×îĞ¡½Úµã
-		if (minN != NULL) {    // Èç¹û¶ÑÖĞÒÑ¾­´æÔÚ×îĞ¡½Úµã minN
-			// ½«ĞÂ½Úµã²åÈëµ½ minN µÄ×ó²à
+		FibonacciNode* minN = this->minNode;   // è·å–å½“å‰æœ€å°èŠ‚ç‚¹
+		if (minN != NULL) {    // å¦‚æœå †ä¸­å·²ç»å­˜åœ¨æœ€å°èŠ‚ç‚¹ minN
+			// å°†æ–°èŠ‚ç‚¹æ’å…¥åˆ° minN çš„å·¦ä¾§
 			FibonacciNode* minLeft = minN->left;
 			minN->left = node;
 			node->right = minN;
 			node->left = minLeft;
 			minLeft->right = node;
 		}
-		// Èç¹û¶ÑÎª¿Õ»òÕßĞÂ½ÚµãµÄ¹Ø¼üÖµĞ¡ÓÚµ±Ç°×îĞ¡½ÚµãµÄ¹Ø¼üÖµ£¬Ôò¸üĞÂ×îĞ¡½ÚµãÖ¸Õë
+		// å¦‚æœå †ä¸ºç©ºæˆ–è€…æ–°èŠ‚ç‚¹çš„å…³é”®å€¼å°äºå½“å‰æœ€å°èŠ‚ç‚¹çš„å…³é”®å€¼ï¼Œåˆ™æ›´æ–°æœ€å°èŠ‚ç‚¹æŒ‡é’ˆ
 		if (minN == NULL || minN->key > node->key) {
 			this->minNode = node;
 		}
-		this->numNodes++;  // Ôö¼Ó¶ÑÖĞ½ÚµãµÄÊıÁ¿
+		this->numNodes++;  // å¢åŠ å †ä¸­èŠ‚ç‚¹çš„æ•°é‡
 	}
-	//´Ó¶ÑÖĞÌáÈ¡¾ßÓĞ×îĞ¡¹Ø¼üÖµµÄ½Úµã
+	//ä»å †ä¸­æå–å…·æœ‰æœ€å°å…³é”®å€¼çš„èŠ‚ç‚¹
 	FibonacciNode* extractMin() {
 		//Extract the node with the minimum key from the heap. O(log n) operation, where n is the number of nodes in the heap
-		FibonacciNode* minN = this->minNode;   // »ñÈ¡µ±Ç°×îĞ¡½Úµã
+		FibonacciNode* minN = this->minNode;   // è·å–å½“å‰æœ€å°èŠ‚ç‚¹
 		if (minN != NULL) {
-			int deg = minN->degree;  // »ñÈ¡×îĞ¡½ÚµãµÄ¶ÈÊı
-			FibonacciNode* currChild = minN->child;  // ´¦Àí×îĞ¡½ÚµãµÄ×Ó½Úµã
+			int deg = minN->degree;  // è·å–æœ€å°èŠ‚ç‚¹çš„åº¦æ•°
+			FibonacciNode* currChild = minN->child;  // å¤„ç†æœ€å°èŠ‚ç‚¹çš„å­èŠ‚ç‚¹
 			FibonacciNode* remChild;
 			for (int i = 0; i < deg; i++) {
 				remChild = currChild;
 				currChild = currChild->right;
-				_existingToRoot(remChild);  // ½«×Ó½Úµã´Ó¶ÑÖĞÒÆ³ı²¢Ìí¼Óµ½¸ùÁ´±íÖĞ
+				_existingToRoot(remChild);  // å°†å­èŠ‚ç‚¹ä»å †ä¸­ç§»é™¤å¹¶æ·»åŠ åˆ°æ ¹é“¾è¡¨ä¸­
 			}
-			_removeNodeFromRoot(minN);  // ´Ó¸ùÁ´±íÖĞÒÆ³ı×îĞ¡½Úµã
+			_removeNodeFromRoot(minN);  // ä»æ ¹é“¾è¡¨ä¸­ç§»é™¤æœ€å°èŠ‚ç‚¹
 			this->numNodes--;
 			if (this->numNodes == 0) {
 				this->minNode = NULL;
 			}
 			else {
-				this->minNode = minN->right;   // ¸üĞÂ×îĞ¡½ÚµãÖ¸Õë£¬²¢½øĞĞºÏ²¢²Ù×÷
+				this->minNode = minN->right;   // æ›´æ–°æœ€å°èŠ‚ç‚¹æŒ‡é’ˆï¼Œå¹¶è¿›è¡Œåˆå¹¶æ“ä½œ
 				FibonacciNode* minNLeft = minN->left;
 				this->minNode->left = minNLeft;
 				minNLeft->right = this->minNode;
@@ -163,19 +163,19 @@ public:
 		}
 		return minN;
 	}
-	void decreaseKey(int u, int newKey) {   //ÓÃÓÚ¼õĞ¡ì³²¨ÄÇÆõ¶ÑÖĞ¾ßÓĞË÷Òı u µÄ½ÚµãµÄ¹Ø¼üÖµ¡£
+	void decreaseKey(int u, int newKey) {   //ç”¨äºå‡å°æ–æ³¢é‚£å¥‘å †ä¸­å…·æœ‰ç´¢å¼• u çš„èŠ‚ç‚¹çš„å…³é”®å€¼ã€‚
 		//Decrease the key of the node in the Fibonacci heap that has index u. O(1) operation
-		FibonacciNode* node = this->nodePtrs[u];   // »ñÈ¡¾ßÓĞË÷Òı u µÄ½Úµã
-		if (newKey > node->key) return;   // Èç¹ûĞÂµÄ¹Ø¼üÖµ´óÓÚ½Úµãµ±Ç°µÄ¹Ø¼üÖµ£¬Ôò²»½øĞĞÈÎºÎ²Ù×÷£¬Ö±½Ó·µ»Ø
-		node->key = newKey;   // ¸üĞÂ½ÚµãµÄ¹Ø¼üÖµÎªĞÂµÄ¹Ø¼üÖµ
-		if (node->parent != NULL) {   // Èç¹û½ÚµãÓĞ¸¸½Úµã
+		FibonacciNode* node = this->nodePtrs[u];   // è·å–å…·æœ‰ç´¢å¼• u çš„èŠ‚ç‚¹
+		if (newKey > node->key) return;   // å¦‚æœæ–°çš„å…³é”®å€¼å¤§äºèŠ‚ç‚¹å½“å‰çš„å…³é”®å€¼ï¼Œåˆ™ä¸è¿›è¡Œä»»ä½•æ“ä½œï¼Œç›´æ¥è¿”å›
+		node->key = newKey;   // æ›´æ–°èŠ‚ç‚¹çš„å…³é”®å€¼ä¸ºæ–°çš„å…³é”®å€¼
+		if (node->parent != NULL) {   // å¦‚æœèŠ‚ç‚¹æœ‰çˆ¶èŠ‚ç‚¹
 			if (node->key < node->parent->key) {
 				FibonacciNode* parentNode = node->parent;
-				_cut(node);  // ÇĞ¶Ï½ÚµãÓëÆä¸¸½ÚµãÖ®¼äµÄÁ´½Ó
-				_cascadingCut(parentNode);  // ½øĞĞ¼¶ÁªÇĞ¶Ï²Ù×÷£¬Ö±µ½Âú×ã¶ÑĞÔÖÊ
+				_cut(node);  // åˆ‡æ–­èŠ‚ç‚¹ä¸å…¶çˆ¶èŠ‚ç‚¹ä¹‹é—´çš„é“¾æ¥
+				_cascadingCut(parentNode);  // è¿›è¡Œçº§è”åˆ‡æ–­æ“ä½œï¼Œç›´åˆ°æ»¡è¶³å †æ€§è´¨
 			}
 		}
-		if (node->key < this->minNode->key) {   // Èç¹û½ÚµãµÄ¹Ø¼üÖµĞ¡ÓÚµ±Ç°×îĞ¡½ÚµãµÄ¹Ø¼üÖµ£¬Ôò¸üĞÂ×îĞ¡½ÚµãÖ¸Õë
+		if (node->key < this->minNode->key) {   // å¦‚æœèŠ‚ç‚¹çš„å…³é”®å€¼å°äºå½“å‰æœ€å°èŠ‚ç‚¹çš„å…³é”®å€¼ï¼Œåˆ™æ›´æ–°æœ€å°èŠ‚ç‚¹æŒ‡é’ˆ
 			this->minNode = node;
 		}
 	}
@@ -340,7 +340,7 @@ tuple<vector<int>, vector<int>> dijkstraFibonacci(Graph& G, int s) {
 tuple<vector<int>, vector<int>> dijkstraTree(Graph& G, int s) {
 	//Dijkstra's algorithm using a self-balancing binary tree (C++ set)
 	int u, v, w;
-	set<QueueItem, minQueueItem> Q;   // ×Ô¶¯¸ù¾İÖ¸¶¨µÄ±È½Ï¹æÔò¶ÔÔªËØ½øĞĞÅÅĞò£¬²¢ÇÒ²»ÔÊĞíÖØ¸´ÔªËØ
+	set<QueueItem, minQueueItem> Q;   // è‡ªåŠ¨æ ¹æ®æŒ‡å®šçš„æ¯”è¾ƒè§„åˆ™å¯¹å…ƒç´ è¿›è¡Œæ’åºï¼Œå¹¶ä¸”ä¸å…è®¸é‡å¤å…ƒç´ 
 	vector<int> L(G.n), P(G.n);
 	vector<bool> D(G.n);
 	for (u = 0; u < G.n; u++) {
@@ -350,10 +350,10 @@ tuple<vector<int>, vector<int>> dijkstraTree(Graph& G, int s) {
 	}
 	L[s] = 0;
 	Q.emplace(QueueItem{ 0,s });
-	// »áÏÈÉ¾³ıÔ­Ê¼µãµÄÂ·¾¶£¬ÔÙÉú³ÉÒ»¸öĞÂµÄÂ·¾¶¡£ÕâÖÖÆµ·±µÄÉ¾³ıÌí¼Ó²Ù×÷²»ÊÊºÏÊı¾İÃÜ¼¯Çé¿ö
+	// ä¼šå…ˆåˆ é™¤åŸå§‹ç‚¹çš„è·¯å¾„ï¼Œå†ç”Ÿæˆä¸€ä¸ªæ–°çš„è·¯å¾„ã€‚è¿™ç§é¢‘ç¹çš„åˆ é™¤æ·»åŠ æ“ä½œä¸é€‚åˆæ•°æ®å¯†é›†æƒ…å†µ
 	while (!Q.empty()) {
-		u = (*Q.begin()).vertex;  //»ñÈ¡µÚÒ»¸öÔªËØ¡£Í¨¹ı (*Q.begin()).vertex µÄ·½Ê½·ÃÎÊ¸ÃÔªËØµÄ vertex ³ÉÔ±
-		Q.erase(*Q.begin());   // ´ÓÓĞĞò¼¯ºÏ Q ÖĞÉ¾³ıµÚÒ»¸öÔªËØ
+		u = (*Q.begin()).vertex;  //è·å–ç¬¬ä¸€ä¸ªå…ƒç´ ã€‚é€šè¿‡ (*Q.begin()).vertex çš„æ–¹å¼è®¿é—®è¯¥å…ƒç´ çš„ vertex æˆå‘˜
+		Q.erase(*Q.begin());   // ä»æœ‰åºé›†åˆ Q ä¸­åˆ é™¤ç¬¬ä¸€ä¸ªå…ƒç´ 
 		D[u] = true;
 		for (auto& neighbour : G.adj[u]) {
 			v = neighbour.vertex;
@@ -378,9 +378,9 @@ tuple<vector<int>, vector<int>> dijkstraTree(Graph& G, int s) {
 
 tuple<vector<int>, vector<int>> dijkstraHeap(Graph& G, int s) {
 	//Dijkstra's algorithm using a binary heap (C++ priority_queue)
-	// ÓÅÏÈ¶ÓÁĞÄ¬ÈÏÊÇ×î´ó¶Ñ£¬ÕâÀïÊ¹ÓÃ×îĞ¡¶Ñ
+	// ä¼˜å…ˆé˜Ÿåˆ—é»˜è®¤æ˜¯æœ€å¤§å †ï¼Œè¿™é‡Œä½¿ç”¨æœ€å°å †
 	int u, v, w;
-	priority_queue<QueueItem, vector<QueueItem>, maxQueueItem> Q;   //ÉùÃ÷ÁËÒ»¸öÓÅÏÈ¶ÓÁĞ Q£¬ÓÃÓÚ´æ´¢´ı´¦ÀíµÄ½Úµã¼°Æä¾àÀëĞÅÏ¢¡£
+	priority_queue<QueueItem, vector<QueueItem>, maxQueueItem> Q;   //å£°æ˜äº†ä¸€ä¸ªä¼˜å…ˆé˜Ÿåˆ— Qï¼Œç”¨äºå­˜å‚¨å¾…å¤„ç†çš„èŠ‚ç‚¹åŠå…¶è·ç¦»ä¿¡æ¯ã€‚
 	vector<int> L(G.n), P(G.n);
 	vector<bool> D(G.n);
 	for (u = 0; u < G.n; u++) {
@@ -389,12 +389,12 @@ tuple<vector<int>, vector<int>> dijkstraHeap(Graph& G, int s) {
 		P[u] = -1;
 	}
 	L[s] = 0;
-	Q.emplace(QueueItem{ 0,s });   //½«Ô´½Úµã s Ìí¼Óµ½ÓÅÏÈ¶ÓÁĞ Q ÖĞ¡£ÕâÀïÊ¹ÓÃÁË emplace º¯Êı£¬Í¨¹ı¹¹ÔìÒ»¸ö QueueItem ÀàĞÍµÄ¶ÔÏó£¬²¢½«Æä²åÈëµ½¶ÓÁĞÖĞ¡£
-	// Õâ¸ö×îĞ¡¶Ñ²»ÊÊºÏÊı¾İÃÜ¼¯Çé¿ö£¬ÒòÎªpriority_queueÔÚÎ¬»¤¶ÑµÄÊ±ºò»áÏûºÄ¸ü¶àÊ±¼ä
+	Q.emplace(QueueItem{ 0,s });   //å°†æºèŠ‚ç‚¹ s æ·»åŠ åˆ°ä¼˜å…ˆé˜Ÿåˆ— Q ä¸­ã€‚è¿™é‡Œä½¿ç”¨äº† emplace å‡½æ•°ï¼Œé€šè¿‡æ„é€ ä¸€ä¸ª QueueItem ç±»å‹çš„å¯¹è±¡ï¼Œå¹¶å°†å…¶æ’å…¥åˆ°é˜Ÿåˆ—ä¸­ã€‚
+	// è¿™ä¸ªæœ€å°å †ä¸é€‚åˆæ•°æ®å¯†é›†æƒ…å†µï¼Œå› ä¸ºpriority_queueåœ¨ç»´æŠ¤å †çš„æ—¶å€™ä¼šæ¶ˆè€—æ›´å¤šæ—¶é—´
 	while (!Q.empty()) {
-		u = Q.top().vertex;   //»ñÈ¡¶ÓÁĞÖĞ¾àÀë×îĞ¡µÄ½Úµã
-		Q.pop();   //´Ó¶ÓÁĞÖĞÒÆ³ı¸Ã½Úµã
-		if (D[u] != true) {   // Î´¾­´¦Àí
+		u = Q.top().vertex;   //è·å–é˜Ÿåˆ—ä¸­è·ç¦»æœ€å°çš„èŠ‚ç‚¹
+		Q.pop();   //ä»é˜Ÿåˆ—ä¸­ç§»é™¤è¯¥èŠ‚ç‚¹
+		if (D[u] != true) {   // æœªç»å¤„ç†
 			D[u] = true;
 			for (auto& neighbour : G.adj[u]) {
 				v = neighbour.vertex;
@@ -416,15 +416,15 @@ tuple<vector<int>, vector<int>> dijkstraBasic(Graph& G, int s) {
 	//Basic Dijkstra's algorithm (O(n^2) complexity)
 	int u, v, w, minL;
 	size_t i, uPos;
-	vector<int> L(G.n), P(G.n), Candidates;  // ¶¨ÒåÏòÁ¿ L, P, Candidates£¬ÓÃÓÚ´æ´¢¾àÀë¡¢Ç°Çı½ÚµãºÍºòÑ¡½ÚµãµÄĞÅÏ¢
-	vector<bool> D(G.n);   // ¶¨ÒåÏòÁ¿ D£¬ÓÃÓÚ±ê¼Ç½ÚµãÊÇ·ñ±»·ÃÎÊ¹ı
+	vector<int> L(G.n), P(G.n), Candidates;  // å®šä¹‰å‘é‡ L, P, Candidatesï¼Œç”¨äºå­˜å‚¨è·ç¦»ã€å‰é©±èŠ‚ç‚¹å’Œå€™é€‰èŠ‚ç‚¹çš„ä¿¡æ¯
+	vector<bool> D(G.n);   // å®šä¹‰å‘é‡ Dï¼Œç”¨äºæ ‡è®°èŠ‚ç‚¹æ˜¯å¦è¢«è®¿é—®è¿‡
 	for (u = 0; u < G.n; u++) {
-		D[u] = false; // ½«½Úµã u µÄ·ÃÎÊ×´Ì¬±ê¼ÇÎªÎ´·ÃÎÊ
-		L[u] = infty; // ½«½Úµã u µÄ¾àÀë³õÊ¼»¯ÎªÎŞÇî´ó
-		P[u] = -1; // ½«½Úµã u µÄÇ°Çı½Úµã³õÊ¼»¯Îª -1£¬±íÊ¾Ã»ÓĞÇ°Çı½Úµã
+		D[u] = false; // å°†èŠ‚ç‚¹ u çš„è®¿é—®çŠ¶æ€æ ‡è®°ä¸ºæœªè®¿é—®
+		L[u] = infty; // å°†èŠ‚ç‚¹ u çš„è·ç¦»åˆå§‹åŒ–ä¸ºæ— ç©·å¤§
+		P[u] = -1; // å°†èŠ‚ç‚¹ u çš„å‰é©±èŠ‚ç‚¹åˆå§‹åŒ–ä¸º -1ï¼Œè¡¨ç¤ºæ²¡æœ‰å‰é©±èŠ‚ç‚¹
 	}
 	L[s] = 0;
-	Candidates.push_back(s);   //½«½Úµã s Ìí¼Óµ½ Candidates ÏòÁ¿µÄÄ©Î²¡£
+	Candidates.push_back(s);   //å°†èŠ‚ç‚¹ s æ·»åŠ åˆ° Candidates å‘é‡çš„æœ«å°¾ã€‚
 	while (!Candidates.empty()) {
 		uPos = 0;
 		minL = L[Candidates[0]];
@@ -435,13 +435,13 @@ tuple<vector<int>, vector<int>> dijkstraBasic(Graph& G, int s) {
 			}
 		}
 		u = Candidates[uPos];
-		swap(Candidates[uPos], Candidates.back());   // ½«µ±Ç°´¦ÀíµÄ½ÚµãÒÆ¶¯µ½ÁĞ±íÄ©Î²
-		Candidates.pop_back();   // ½«µ±Ç°½Úµã u ´ÓºòÑ¡½ÚµãÁĞ±íÖĞÒÆ³ı
+		swap(Candidates[uPos], Candidates.back());   // å°†å½“å‰å¤„ç†çš„èŠ‚ç‚¹ç§»åŠ¨åˆ°åˆ—è¡¨æœ«å°¾
+		Candidates.pop_back();   // å°†å½“å‰èŠ‚ç‚¹ u ä»å€™é€‰èŠ‚ç‚¹åˆ—è¡¨ä¸­ç§»é™¤
 		D[u] = true;
 		for (auto& neighbour : G.adj[u]) {
 			v = neighbour.vertex;
 			w = neighbour.weight;
-			if (D[v] == false) {   // Èç¹û¸ÃµãÎ´·ÃÎÊ
+			if (D[v] == false) {   // å¦‚æœè¯¥ç‚¹æœªè®¿é—®
 				if (L[u] + w < L[v]) {
 					if (L[v] == infty) {
 						Candidates.push_back(v);
@@ -452,7 +452,7 @@ tuple<vector<int>, vector<int>> dijkstraBasic(Graph& G, int s) {
 			}
 		}
 	}
-	return make_tuple(L, P);   //Ê¹ÓÃ make_tuple º¯Êı´´½¨ÁËÒ»¸öÔª×é£¬ÆäÖĞ°üº¬ÁËÁ½¸ö±äÁ¿ L ºÍ P
+	return make_tuple(L, P);   //ä½¿ç”¨ make_tuple å‡½æ•°åˆ›å»ºäº†ä¸€ä¸ªå…ƒç»„ï¼Œå…¶ä¸­åŒ…å«äº†ä¸¤ä¸ªå˜é‡ L å’Œ P
 }
 
 vector<int> getPath(int u, int v, vector<int>& P) {
@@ -465,7 +465,7 @@ vector<int> getPath(int u, int v, vector<int>& P) {
 		x = P[x];
 	}
 	path.push_back(u);
-	reverse(path.begin(), path.end());  // ×ªÖÃ
+	reverse(path.begin(), path.end());  // è½¬ç½®
 	return path;
 }
 
@@ -519,7 +519,7 @@ int main() {
 
 	//Execute basic version of Dijkstra's algorithm
 	start = clock();
-	tie(L, P) = dijkstraBasic(G, s);    //tie º¯Êı  Ôª×é
+	tie(L, P) = dijkstraBasic(G, s);    //tie å‡½æ•°  å…ƒç»„
 	double duration4 = ((double)clock() - start) / CLOCKS_PER_SEC;
 
 	//Output some information
@@ -535,9 +535,9 @@ int main() {
 	//		cout << "len = infinity. No path exists\n";
 	//	}
 	//	else {
-	//		cout << "len = " << setw(4) << L[u] << "\tpath = " << getPath(s, u, P) << "\n";   //setw(4) ÉèÖÃÁËÊä³öµÄ¿í¶ÈÎª 4 ¸ö×Ö·û
+	//		cout << "len = " << setw(4) << L[u] << "\tpath = " << getPath(s, u, P) << "\n";   //setw(4) è®¾ç½®äº†è¾“å‡ºçš„å®½åº¦ä¸º 4 ä¸ªå­—ç¬¦
 	//	}
 	//}
 
-	//ÅúÁ¿×¢ÊÍ: Ctrl + K, Ctrl + C È¡Ïû×¢ÊÍ : Ctrl + K, Ctrl + U
+	//æ‰¹é‡æ³¨é‡Š: Ctrl + K, Ctrl + C å–æ¶ˆæ³¨é‡Š : Ctrl + K, Ctrl + U
 }
