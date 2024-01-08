@@ -1,15 +1,17 @@
-#include <iostream>   //用于输入和输出流操作，包括 std::cin、std::cout 等。
+#include <iostream>   //用于输入和输出流操作，包括 cin、cout 等。
 #include <iomanip>
 #include <climits>   //包含了一些整数类型的常量，如 INT_MAX 和 INT_MIN。
-#include <algorithm> //提供了一些常见的算法函数，如排序、查找等。例如，std::sort 可用于对容器进行排序。
+#include <algorithm> //提供了一些常见的算法函数，如排序、查找等。例如，sort 可用于对容器进行排序。
 #include <vector>    //实现了动态数组（向量）的容器，提供了控制大小、访问元素和迭代等功能。
 #include <tuple>     //提供了元组的实现，用于存储和操作多个不同类型的值。
 #include <set>
 #include <queue>    //实现了队列的容器，遵循先进先出（FIFO）的原则。
 #include <time.h>   //C 语言中的标准头文件，提供了处理日期和时间的函数。
 #include <random>
+#include <boost/graph/adjacency_list.hpp>
+#include <boost/graph/dijkstra_shortest_paths.hpp>
 
-using namespace std;   //它是一个命名空间的声明，表示在当前代码中使用 std 命名空间中的所有标识符，而无需显式地加上 std:: 前缀。
+using namespace std;   //它是一个命名空间的声明，表示在当前代码中使用 std 命名空间中的所有标识符，而无需显式地加上  前缀。
 
 const int infty = INT_MAX;   //定义了一个名为 infty 的常量，其值被设置为 INT_MAX。INT_MAX 是 <climits> 头文件中定义的整数类型的最大值。通过将 infty 设置为 INT_MAX，实际上将其用作表示无穷大的值。
 
@@ -50,7 +52,7 @@ public:
 	}
 };
 
-//Struct and comparison operators used with std::set std::priority_queue)
+//Struct and comparison operators used with set priority_queue)
 struct QueueItem {
 	int label;
 	int vertex;
@@ -301,6 +303,42 @@ private:
 };
 //End of FibonacciHeap class
 
+typedef boost::adjacency_list<boost::listS, boost::vecS, boost::directedS,
+	boost::no_property, boost::property<boost::edge_weight_t, int>> BoostGraph;
+typedef boost::graph_traits<BoostGraph>::edge_descriptor Edge;
+typedef boost::property_map<BoostGraph, boost::edge_weight_t>::type WeightMap;
+
+tuple<vector<int>, vector<int>> dijkstraFibonacciHeap(const Graph& G, int s) {
+	int n = G.n;
+	vector<int> L(n, infty);
+	vector<int> P(n, -1);
+	vector<int> distMap(n);
+
+	BoostGraph boostGraph(n);
+	WeightMap weightMap = boost::get(boost::edge_weight, boostGraph);
+
+	for (int u = 0; u < n; ++u) {
+		for (const auto& neighbour : G.adj[u]) {
+			int v = neighbour.vertex;
+			int w = neighbour.weight;
+			Edge e;   //创建一个边对象 e
+			bool success;   //创建一个布尔变量 success，用于指示边的添加是否成功
+			tie(e, success) = boost::add_edge(u, v, boostGraph);
+			weightMap[e] = w;
+		}
+	}
+
+	boost::dijkstra_shortest_paths(boostGraph, s,
+		boost::distance_map(boost::make_iterator_property_map(distMap.begin(),
+			boost::get(boost::vertex_index, boostGraph))));
+
+	for (int u = 0; u < n; ++u) {
+		L[u] = distMap[u];
+	}
+
+	return make_tuple(L, P);
+}
+
 tuple<vector<int>, vector<int>> dijkstraFibonacci(Graph& G, int s) {
 	//Dijkstra's algorithm using a Fibonacci heap object
 	int u, v, w;
@@ -482,20 +520,20 @@ int main() {
 	//G.addArc(3, 4, 5);
 	//G.addArc(4, 0, 7);
 
-	int numNodes = 5e+3;
+	int numNodes = 1e+3;
 	Graph G(numNodes);
-	
-	std::random_device rd;
-	std::mt19937 gen(rd());
-	std::uniform_int_distribution<int> dist(1, 1e+3);
-	
+
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_int_distribution<int> dist(1, 1e+3);
+
 	for (int i = 0; i < numNodes; i++) {
-	    for (int j = 0; j < numNodes; j++) {
-	        if (i != j) {
-	            int weight = dist(gen);
-	            G.addArc(i, j, weight);
-	        }
-	    }
+		for (int j = 0; j < numNodes; j++) {
+			if (i != j) {
+				int weight = dist(gen);
+				G.addArc(i, j, weight);
+			}
+		}
 	}
 
 	//Set the source vertex and declare some variables
@@ -507,37 +545,45 @@ int main() {
 	tie(L, P) = dijkstraFibonacci(G, s);
 	double duration1 = ((double)clock() - start) / CLOCKS_PER_SEC;
 
+	start = clock();
+	tie(L, P) = dijkstraFibonacciHeap(G, s);
+	double duration2 = ((double)clock() - start) / CLOCKS_PER_SEC;
+
+
 	//Execute Dijkstra's algorithm using a self-balancing binary tree
 	start = clock();
 	tie(L, P) = dijkstraTree(G, s);
-	double duration2 = ((double)clock() - start) / CLOCKS_PER_SEC;
+	double duration3 = ((double)clock() - start) / CLOCKS_PER_SEC;
+
 
 	//Execute Dijkstra's algorithm using a binary heap
 	start = clock();
 	tie(L, P) = dijkstraHeap(G, s);
-	double duration3 = ((double)clock() - start) / CLOCKS_PER_SEC;
+	double duration4 = ((double)clock() - start) / CLOCKS_PER_SEC;
+	
 
 	//Execute basic version of Dijkstra's algorithm
 	start = clock();
 	tie(L, P) = dijkstraBasic(G, s);    //tie 函数  元组
-	double duration4 = ((double)clock() - start) / CLOCKS_PER_SEC;
+	double duration5 = ((double)clock() - start) / CLOCKS_PER_SEC;
 
 	//Output some information
 	cout << "Input graph has " << G.n << " vertices and " << G.m << " arcs\n";
 	cout << "Dijkstra with Fibonacci heap took      " << duration1 << " sec.\n";
-	cout << "Dijkstra with self-balancing tree took " << duration2 << " sec.\n";
-	cout << "Dijkstra with binary heap took         " << duration3 << " sec.\n";
-	cout << "Dijkstra (basic form) took             " << duration4 << " sec.\n";
+	cout << "Dijkstra with boost-dijkstra_shortest_paths   " << duration2 << " sec.\n";
+	cout << "Dijkstra with self-balancing tree took " << duration3 << " sec.\n";
+	cout << "Dijkstra with binary heap took         " << duration4 << " sec.\n";
+	cout << "Dijkstra (basic form) took             " << duration5 << " sec.\n";
 	cout << "Shortest paths from source to each vertex are as follows:\n";
-	//for (int u = 0; u < G.n; u++) {
-	//	cout << "v-" << s << " to v-" << u << ",\t";
-	//	if (L[u] == infty) {
-	//		cout << "len = infinity. No path exists\n";
-	//	}
-	//	else {
-	//		cout << "len = " << setw(4) << L[u] << "\tpath = " << getPath(s, u, P) << "\n";   //setw(4) 设置了输出的宽度为 4 个字符
-	//	}
-	//}
+	for (int u = 0; u < G.n; u++) {
+		cout << "v-" << s << " to v-" << u << ",\t";
+		if (L[u] == infty) {
+			cout << "len = infinity. No path exists\n";
+		}
+		else {
+			cout << "len = " << setw(4) << L[u] << "\tpath = " << getPath(s, u, P) << "\n";   //setw(4) 设置了输出的宽度为 4 个字符
+		}
+	}
 
 	//批量注释: Ctrl + K, Ctrl + C 取消注释 : Ctrl + K, Ctrl + U
 }
